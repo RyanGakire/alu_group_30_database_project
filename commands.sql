@@ -23,14 +23,26 @@ CREATE TABLE Classroom(
         capacity INT
 );
 
--- UPDATE
-UPDATE Classroom SET building = 'Biology Block' WHERE classroom_id = 1;
+-- INSERT (Member B)
+INSERT INTO Classroom (room_number, building, capacity) VALUES
+('106', 'Engineering Block', 28),
+('107', 'Engineering Block', 32),
+('108', 'Computer Science Block', 38),
+('109', 'Computer Science Block', 22),
+('110', 'Arts Block', 50);
 
--- DELETE
-DELETE FROM Classroom WHERE classroom_id = 5;
+-- UPDATE (Member B)
+UPDATE Classroom
+SET capacity = 30
+WHERE room_number = '106';
 
--- SELECT
-SELECT * FROM Classroom WHERE capacity > 30;
+-- DELETE (Member B)
+DELETE FROM Classroom
+WHERE room_number = '110';
+
+-- SELECT (Member B)
+SELECT * FROM Classroom
+WHERE capacity > 25;
 
 -- ============================
 -- Member C - Faculty Table
