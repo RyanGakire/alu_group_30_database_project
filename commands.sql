@@ -80,3 +80,32 @@ WHERE faculty_id = 7;
 SELECT * FROM Faculty
 WHERE department = 'Software Engineering';
 
+-- Extra_Curricular_Activities table
+-- done by Fiinsi
+
+CREATE TABLE Extra_Curricular_Activities (
+    activity_id INT PRIMARY KEY AUTO_INCREMENT,
+    activity_name VARCHAR(100) NOT NULL,
+    category VARCHAR(50),
+    schedule_day VARCHAR(20),
+    advisor_id INT,
+    max_participants INT,
+    FOREIGN KEY (advisor_id) REFERENCES Faculty(faculty_id)
+);
+
+INSERT INTO Extra_Curricular_Activities (activity_name, category, schedule_day, advisor_id, max_participants) VALUES
+('Movie Club', 'Entertainment', 'Monday', 1, 25),
+('Theatre Club', 'Arts', 'Tuesday', 2, 20),
+('Book Club', 'Academic Club', 'Wednesday', 3, 30),
+('Design Club', 'Academic Club', 'Thursday', 4, 40),
+('Photography Club', 'Arts', 'Friday', 5, 15);
+
+UPDATE Extra_Curricular_Activities
+SET max_participants = 35
+WHERE activity_name = 'Book Club';
+
+DELETE FROM Extra_Curricular_Activities
+WHERE activity_name = 'Photography Club';
+
+SELECT * FROM Extra_Curricular_Activities
+WHERE category = 'Academic Club';
