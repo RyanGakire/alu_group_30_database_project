@@ -29,6 +29,8 @@ UPDATE Classroom SET building = 'Biology Block' WHERE classroom_id = 1;
 -- DELETE
 DELETE FROM Classroom WHERE classroom_id = 5;
 
+-- SELECT
+SELECT * FROM Classroom WHERE capacity > 30;
 
 -- ============================
 -- Member C - Faculty Table
