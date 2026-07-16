@@ -16,6 +16,12 @@ USE defaultdb;
 -- =======================================================
 -- Member B - Classroom table
 -- =======================================================
+CREATE TABLE Classroom(
+        classroom_id INT PRIMARY KEY AUTO_INCREMENT,
+        room_number VARCHAR(10),
+        building VARCHAR(50),
+        capacity INT
+);
 
 -- ============================
 -- Member C - Faculty Table
