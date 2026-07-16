@@ -82,7 +82,7 @@ WHERE department = 'Software Engineering';
 
 -- Extra_Curricular_Activities table
 -- done by Fiinsi
-
+-- waiting on Faculty table to exist before this can run
 CREATE TABLE Extra_Curricular_Activities (
     activity_id INT PRIMARY KEY AUTO_INCREMENT,
     activity_name VARCHAR(100) NOT NULL,
