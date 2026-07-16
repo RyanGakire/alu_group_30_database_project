@@ -98,7 +98,8 @@ INSERT INTO Extra_Curricular_Activities (activity_name, category, schedule_day, 
 ('Theatre Club', 'Arts', 'Tuesday', 2, 20),
 ('Book Club', 'Academic Club', 'Wednesday', 3, 30),
 ('Design Club', 'Academic Club', 'Thursday', 4, 40),
-('Photography Club', 'Arts', 'Friday', 5, 15);
+('Photography Club', 'Arts', 'Friday', 5, 15),
+('Critics Club', 'Entertainment', 'Saturday', 1, 20);
 
 UPDATE Extra_Curricular_Activities
 SET max_participants = 35
