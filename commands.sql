@@ -23,6 +23,13 @@ CREATE TABLE Classroom(
         capacity INT
 );
 
+-- UPDATE
+UPDATE Classroom SET building = 'Biology Block' WHERE classroom_id = 1;
+
+-- DELETE
+DELETE FROM Classroom WHERE classroom_id = 5;
+
+
 -- ============================
 -- Member C - Faculty Table
 -- ============================
