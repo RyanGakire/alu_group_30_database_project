@@ -12,6 +12,38 @@ USE defaultdb;
 -- 2. CREATE TABLE statements (in dependency order)
 -- =======================================================
 
+-- =======================================================
+-- Member A - Student Table
+-- =======================================================
+CREATE TABLE Students (
+    student_id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(100),
+    classroom_id INT,
+    enrollment_date DATE,
+    FOREIGN KEY (classroom_id) REFERENCES Classroom(classroom_id)
+);
+
+-- INSERT
+INSERT INTO Students (name, email, classroom_id, enrollment_date) VALUES
+('Laila', 'laila.k@alu.edu', 1, '2023-09-01'),
+('Virginie Sia', 'virginie.sia@alu.edu', 2, '2023-09-01'),
+('Germain Akayezu', 'germain.akayezu@alu.edu', 3, '2023-09-05'),
+('Ryan Gakire', 'ryan.gakire@alu.edu', 6, '2024-01-15'),
+('Lucky Umoka', 'lucky.umoka@alu.edu', 8, '2024-01-20');
+
+-- UPDATE
+UPDATE Students
+SET email = 'laila.k@alu.edu'
+WHERE name = 'Laila';
+
+-- DELETE
+DELETE FROM Students
+WHERE name = 'Lucky Umoka';
+
+-- SELECT
+SELECT * FROM Students
+WHERE classroom_id = 2;
 
 -- =======================================================
 -- Member B - Classroom table
