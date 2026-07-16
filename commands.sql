@@ -110,3 +110,7 @@ WHERE activity_name = 'Photography Club';
 
 SELECT * FROM Extra_Curricular_Activities
 WHERE category = 'Academic Club';
+
+SELECT category, COUNT(*) AS total
+FROM Extra_Curricular_Activities
+GROUP BY category;
