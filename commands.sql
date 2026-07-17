@@ -113,6 +113,39 @@ WHERE faculty_id = 7;
 SELECT * FROM Faculty
 WHERE department = 'Software Engineering';
 
+-- ================================================
+-- Member D - Courses Table (Iradukunda Akayezu Germain)
+-- ================================================
+CREATE TABLE Courses (
+    course_id INT PRIMARY KEY AUTO_INCREMENT,
+    course_name VARCHAR(100) NOT NULL,
+    credits INT,
+    faculty_id INT,
+    classroom_id INT,
+    FOREIGN KEY (faculty_id) REFERENCES Faculty(faculty_id),
+    FOREIGN KEY (classroom_id) REFERENCES Classroom(classroom_id)
+);
+
+-- INSERT (Member D)
+INSERT INTO Courses (course_name, credits, faculty_id, classroom_id) VALUES
+('Database Systems', 4, 1, 1),
+('Software Engineering', 3, 2, 2),
+('Web Development', 3, 1, 3),
+('Data Structures', 4, 3, 1),
+('Operating Systems', 4, 2, 2);
+
+-- UPDATE (Member D)
+UPDATE Courses
+SET credits = 5
+WHERE course_name = 'Database Systems';
+
+-- DELETE (Member D)
+DELETE FROM Courses
+WHERE course_name = 'Operating Systems';
+
+-- SELECT (Member D)
+SELECT * FROM Courses
+WHERE credits >= 4;
 
 -- =======================================================
 -- Member E - Extra Curricular Activities (Fiinsi)
