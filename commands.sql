@@ -187,6 +187,8 @@ SELECT category, COUNT(*) AS total
 FROM Extra_Curricular_Activities
 GROUP BY category;
 
+-- Last reviewed by Lucky Umoka - 2026-07-17
+
 -- =======================================================
 -- Member 5 (Lucky Umoka) - Junction Tables
 -- =======================================================
@@ -333,5 +335,4 @@ data that belongs in another table, and all non-key columns depend
 only on the primary key of their own table. This design prevents
 data anomalies when inserting, updating, or deleting records.
 */
-
 
