@@ -186,3 +186,151 @@ WHERE category = 'Academic Club';
 SELECT category, COUNT(*) AS total
 FROM Extra_Curricular_Activities
 GROUP BY category;
+
+-- =======================================================
+-- Member 5 (Lucky Umoka) - Junction Tables
+-- =======================================================
+
+-- -------------------------------------------------------
+-- JUNCTION TABLE 1: Student_Courses
+-- PURPOSE: One student can take many courses.
+--          One course can have many students.
+--          We cannot store this in either table alone
+--          so we create a middle table that stores pairs.
+-- -------------------------------------------------------
+CREATE TABLE IF NOT EXISTS Student_Courses (
+    student_id INT NOT NULL,
+    course_id INT NOT NULL,
+    enrollment_date DATE,
+    PRIMARY KEY (student_id, course_id),
+    FOREIGN KEY (student_id) REFERENCES Students(student_id),
+    FOREIGN KEY (course_id) REFERENCES Courses(course_id)
+);
+
+-- INSERT (Member 5)
+INSERT INTO Student_Courses (student_id, course_id, enrollment_date) VALUES
+(1, 1, '2026-01-15'),
+(1, 2, '2026-01-15'),
+(2, 1, '2026-01-16'),
+(3, 3, '2026-01-17'),
+(4, 2, '2026-01-18');
+
+-- UPDATE (Member 5)
+UPDATE Student_Courses
+SET enrollment_date = '2026-02-01'
+WHERE student_id = 1 AND course_id = 1;
+
+-- DELETE (Member 5)
+DELETE FROM Student_Courses
+WHERE student_id = 4 AND course_id = 2;
+
+-- SELECT (Member 5)
+SELECT * FROM Student_Courses
+WHERE course_id = 1;
+
+-- -------------------------------------------------------
+-- JUNCTION TABLE 2: Student_Activities
+-- PURPOSE: One student can join many activities.
+--          One activity can have many students.
+--          Same many-to-many problem solved with junction.
+-- -------------------------------------------------------
+CREATE TABLE IF NOT EXISTS Student_Activities (
+    student_id INT NOT NULL,
+    activity_id INT NOT NULL,
+    join_date DATE,
+    PRIMARY KEY (student_id, activity_id),
+    FOREIGN KEY (student_id) REFERENCES Students(student_id),
+    FOREIGN KEY (activity_id) REFERENCES Extra_Curricular_Activities(activity_id)
+);
+
+-- INSERT (Member 5)
+INSERT INTO Student_Activities (student_id, activity_id, join_date) VALUES
+(1, 1, '2026-02-01'),
+(2, 2, '2026-02-05'),
+(3, 1, '2026-02-10'),
+(4, 3, '2026-02-12'),
+(1, 2, '2026-02-15');
+
+-- UPDATE (Member 5)
+UPDATE Student_Activities
+SET join_date = '2026-03-01'
+WHERE student_id = 1 AND activity_id = 1;
+
+-- DELETE (Member 5)
+DELETE FROM Student_Activities
+WHERE student_id = 4 AND activity_id = 3;
+
+-- SELECT (Member 5)
+SELECT * FROM Student_Activities
+WHERE student_id = 1;
+
+-- -------------------------------------------------------
+-- JOIN QUERY 1:
+-- "Student X is enrolled in Course Y,
+--  taught by Faculty Z, in Classroom W"
+-- -------------------------------------------------------
+SELECT
+    s.name AS student_name,
+    c.course_name,
+    CONCAT(f.first_name, ' ', f.last_name) AS faculty_name,
+    cl.room_number AS classroom
+FROM Students s
+JOIN Student_Courses sc ON s.student_id = sc.student_id
+JOIN Courses c ON sc.course_id = c.course_id
+JOIN Faculty f ON c.faculty_id = f.faculty_id
+JOIN Classroom cl ON c.classroom_id = cl.classroom_id;
+
+-- -------------------------------------------------------
+-- JOIN QUERY 2:
+-- "Student X participates in Activity Y,
+--  advised by Faculty Z"
+-- -------------------------------------------------------
+SELECT
+    s.name AS student_name,
+    a.activity_name,
+    CONCAT(f.first_name, ' ', f.last_name) AS advisor_name
+FROM Students s
+JOIN Student_Activities sa ON s.student_id = sa.student_id
+JOIN Extra_Curricular_Activities a ON sa.activity_id = a.activity_id
+JOIN Faculty f ON a.advisor_id = f.faculty_id;
+
+-- -------------------------------------------------------
+-- JOIN QUERY 3:
+-- "All students with their enrolled courses and credits"
+-- -------------------------------------------------------
+SELECT
+    s.name AS student_name,
+    c.course_name,
+    c.credits,
+    sc.enrollment_date
+FROM Students s
+JOIN Student_Courses sc ON s.student_id = sc.student_id
+JOIN Courses c ON sc.course_id = c.course_id
+ORDER BY s.name;
+
+-- -------------------------------------------------------
+-- AGGREGATE QUERY:
+-- "How many students are enrolled in each course"
+-- -------------------------------------------------------
+SELECT
+    c.course_name,
+    COUNT(sc.student_id) AS number_of_students
+FROM Courses c
+JOIN Student_Courses sc ON c.course_id = sc.course_id
+GROUP BY c.course_name;
+
+/*
+NORMALIZATION CHECK - Group 30:
+Our database is in Third Normal Form (3NF). Each table stores
+information about exactly one thing. Students stores student data,
+Faculty stores faculty data, Courses stores course data, and so on.
+We avoided many-to-many duplication by using two junction tables.
+Student_Courses connects students to courses without repeating
+student or course information in either table. Student_Activities
+connects students to activities the same way. No table contains
+data that belongs in another table, and all non-key columns depend
+only on the primary key of their own table. This design prevents
+data anomalies when inserting, updating, or deleting records.
+*/
+
+
