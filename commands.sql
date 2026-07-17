@@ -1,4 +1,4 @@
--- .....................................................
+--  .....................................................
 -- :         Group 30: The ALU Database Schema           :
 -- :.....................................................:
 
@@ -14,7 +14,7 @@ USE defaultdb;
 
 
 -- =======================================================
--- Member B - Classroom table
+-- Member B - Classroom table (Ryan Prince Gakire)
 -- =======================================================
 CREATE TABLE Classroom(
         classroom_id INT PRIMARY KEY AUTO_INCREMENT,
