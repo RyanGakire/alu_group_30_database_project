@@ -13,7 +13,7 @@ USE defaultdb;
 -- =======================================================
 
 -- =======================================================
--- Member A - Student Table
+-- Member A - Student Table (Billy Mellika Assita Ouattara)
 -- =======================================================
 CREATE TABLE Students (
     student_id INT PRIMARY KEY AUTO_INCREMENT,
