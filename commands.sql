@@ -90,7 +90,7 @@ CREATE TABLE Faculty (
     phone_number VARCHAR(20)
 );
 
--- INSERT (Member C) - Dates d'embauche réparties de 2024 à 2026
+-- INSERT (Member C) - Dates d'embauche rparties de 2024  2026
 INSERT INTO Faculty (first_name, last_name, email, department, hire_date, phone_number) VALUES
 ('Sia', 'Millimouno', 'sia.millimouno@alu.edu', 'Software Engineering', '2024-02-15', '0788123456'),
 ('Ryan', 'Gakire', 'ryan.gakire@alu.edu', 'Software Engineering', '2024-11-10', '0788234567'),
@@ -193,7 +193,8 @@ GROUP BY category;
 
 -- -------------------------------------------------------
 -- JUNCTION TABLE 1: Student_Courses
--- PURPOSE: One student can take many courses.
+-- PURPOSE: Connects Students to Courses (many-to-many)
+--          One student can take many courses.
 --          One course can have many students.
 --          We cannot store this in either table alone
 --          so we create a middle table that stores pairs.
