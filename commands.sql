@@ -1,6 +1,21 @@
 --  .....................................................
 -- :         Group 30: The ALU Database Schema           :
 -- :.....................................................:
+/*
+NORMALIZATION CHECK - Group 30:
+Our database is in Third Normal Form (3NF). Each table stores
+information about exactly one thing. Students stores student data,
+Faculty stores faculty data, Courses stores course data, and so on.
+We avoided many-to-many duplication by using two junction tables.
+Student_Courses connects students to courses without repeating
+student or course information in either table. Student_Activities
+connects students to activities the same way. No table contains
+data that belongs in another table, and all non-key columns depend
+only on the primary key of their own table. This design prevents
+data anomalies when inserting, updating, or deleting records.
+*/
+
+
 
 -- =======================================================
 -- 1. CREATE DATABASE
@@ -8,46 +23,14 @@
 CREATE DATABASE IF NOT EXISTS defaultdb;
 USE defaultdb;
 
+
 -- =======================================================
 -- 2. CREATE TABLE statements (in dependency order)
 -- =======================================================
 
--- =======================================================
--- Member A - Student Table (Billy Mellika Assita Ouattara)
--- =======================================================
-CREATE TABLE Students (
-    student_id INT PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(100) NOT NULL,
-    email VARCHAR(100),
-    classroom_id INT,
-    enrollment_date DATE,
-    FOREIGN KEY (classroom_id) REFERENCES Classroom(classroom_id)
-);
-
--- INSERT
-INSERT INTO Students (name, email, classroom_id, enrollment_date) VALUES
-('Laila', 'laila.k@alu.edu', 1, '2023-09-01'),
-('Virginie Sia', 'virginie.sia@alu.edu', 2, '2023-09-01'),
-('Germain Akayezu', 'germain.akayezu@alu.edu', 3, '2023-09-05'),
-('Ryan Gakire', 'ryan.gakire@alu.edu', 6, '2024-01-15'),
-('Lucky Umoka', 'lucky.umoka@alu.edu', 8, '2024-01-20');
-
--- UPDATE
-UPDATE Students
-SET email = 'laila.k@alu.edu'
-WHERE name = 'Laila';
-
--- DELETE
-DELETE FROM Students
-WHERE name = 'Lucky Umoka';
-
--- SELECT
-SELECT * FROM Students
-WHERE classroom_id = 2;
-
--- =======================================================
+-- -------------------------------------------------------
 -- Member B - Classroom table (Ryan Prince Gakire)
--- =======================================================
+-- -------------------------------------------------------
 CREATE TABLE Classroom(
         classroom_id INT PRIMARY KEY AUTO_INCREMENT,
         room_number VARCHAR(10),
@@ -55,7 +38,7 @@ CREATE TABLE Classroom(
         capacity INT
 );
 
--- INSERT (Member B)
+-- INSERT (Member B: Ryan Prince Gakire)
 INSERT INTO Classroom (room_number, building, capacity) VALUES
 ('106', 'Engineering Block', 28),
 ('107', 'Engineering Block', 32),
@@ -63,23 +46,22 @@ INSERT INTO Classroom (room_number, building, capacity) VALUES
 ('109', 'Computer Science Block', 22),
 ('110', 'Arts Block', 50);
 
--- UPDATE (Member B)
+-- UPDATE (Member B: Ryan Prince Gakire)
 UPDATE Classroom
 SET capacity = 30
 WHERE room_number = '106';
 
--- DELETE (Member B)
+-- DELETE (Member B: Ryan Prince Gakire)
 DELETE FROM Classroom
 WHERE room_number = '110';
 
--- SELECT (Member B)
+-- SELECT (Member B: Ryan Prince Gakire)
 SELECT * FROM Classroom
 WHERE capacity > 25;
 
-
--- =======================================================
+-- -------------------------------------------------------
 -- Member C - Faculty Table (Sia Virginie Millimouno)
--- =======================================================
+-- -------------------------------------------------------
 CREATE TABLE Faculty (
     faculty_id INT PRIMARY KEY AUTO_INCREMENT,
     first_name VARCHAR(50) NOT NULL,
@@ -90,7 +72,7 @@ CREATE TABLE Faculty (
     phone_number VARCHAR(20)
 );
 
--- INSERT (Member C) - Dates d'embauche rparties de 2024  2026
+-- INSERT (Member C: Sia Virginie Millimouno) - Dates d'embauche rparties de 2024  2026
 INSERT INTO Faculty (first_name, last_name, email, department, hire_date, phone_number) VALUES
 ('Sia', 'Millimouno', 'sia.millimouno@alu.edu', 'Software Engineering', '2024-02-15', '0788123456'),
 ('Ryan', 'Gakire', 'ryan.gakire@alu.edu', 'Software Engineering', '2024-11-10', '0788234567'),
@@ -100,22 +82,56 @@ INSERT INTO Faculty (first_name, last_name, email, department, hire_date, phone_
 ('Blessing', 'Agordome', 'blessing.agordome@alu.edu', 'Entrepreneurial Leadership', '2026-03-12', '0788678901'),
 ('Hulda', 'Kabore', 'hulda.kabore@alu.edu', 'Software Engineering', '2026-05-01', '0788789012');
 
--- UPDATE (Member C)
+-- UPDATE (Member C: Sia Virginie Millimouno)
 UPDATE Faculty
 SET department = 'Computer Science'
 WHERE faculty_id = 3;
 
--- DELETE (Member C)
+-- DELETE (Member C: Sia Virginie Millimouno)
 DELETE FROM Faculty
 WHERE faculty_id = 7;
 
--- SELECT (Member C)
+-- SELECT (Member C: Sia Virginie Millimouno)
 SELECT * FROM Faculty
 WHERE department = 'Software Engineering';
 
--- ================================================
+-- -------------------------------------------------------
+-- Member A - Student Table (Billy Mellika Assita Ouattara)
+-- -------------------------------------------------------
+CREATE TABLE Students (
+    student_id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(100),
+    classroom_id INT,
+    enrollment_date DATE,
+    FOREIGN KEY (classroom_id) REFERENCES Classroom(classroom_id)
+);
+
+-- INSERT (Member A: Billy Mellika Assita Ouattara)
+INSERT INTO Students (name, email, classroom_id, enrollment_date) VALUES
+('Laila', 'laila.k@alu.edu', 1, '2023-09-01'),
+('Virginie Sia', 'virginie.sia@alu.edu', 2, '2023-09-01'),
+('Germain Akayezu', 'germain.akayezu@alu.edu', 3, '2023-09-05'),
+('Ryan Gakire', 'ryan.gakire@alu.edu', 6, '2024-01-15'),
+('Lucky Umoka', 'lucky.umoka@alu.edu', 8, '2024-01-20');
+
+-- UPDATE (Member A: Billy Mellika Assita Ouattara)
+UPDATE Students
+SET email = 'laila.k@alu.edu'
+WHERE name = 'Laila';
+
+-- DELETE (Member A: Billy Mellika Assita Ouattara)
+DELETE FROM Students
+WHERE name = 'Lucky Umoka';
+
+-- SELECT (Member A: Billy Mellika Assita Ouattara)
+SELECT * FROM Students
+WHERE classroom_id = 2;
+
+
+-- -----------------------------------------------------
 -- Member D - Courses Table (Iradukunda Akayezu Germain)
--- ================================================
+-- -----------------------------------------------------
 CREATE TABLE Courses (
     course_id INT PRIMARY KEY AUTO_INCREMENT,
     course_name VARCHAR(100) NOT NULL,
@@ -126,7 +142,7 @@ CREATE TABLE Courses (
     FOREIGN KEY (classroom_id) REFERENCES Classroom(classroom_id)
 );
 
--- INSERT (Member D)
+-- INSERT (Member D: Iradukunda Akayezu Germain)
 INSERT INTO Courses (course_name, credits, faculty_id, classroom_id) VALUES
 ('Database Systems', 4, 1, 1),
 ('Software Engineering', 3, 2, 2),
@@ -134,22 +150,22 @@ INSERT INTO Courses (course_name, credits, faculty_id, classroom_id) VALUES
 ('Data Structures', 4, 3, 1),
 ('Operating Systems', 4, 2, 2);
 
--- UPDATE (Member D)
+-- UPDATE (Member D: Iradukunda Akayezu Germain)
 UPDATE Courses
 SET credits = 5
 WHERE course_name = 'Database Systems';
 
--- DELETE (Member D)
+-- DELETE (Member D: Iradukunda Akayezu Germain)
 DELETE FROM Courses
 WHERE course_name = 'Operating Systems';
 
--- SELECT (Member D)
+-- SELECT (Member D: Iradukunda Akayezu Germain)
 SELECT * FROM Courses
 WHERE credits >= 4;
 
--- =======================================================
+-- -------------------------------------------------------
 -- Member E - Extra Curricular Activities (Fiinsi)
--- =======================================================
+-- -------------------------------------------------------
 CREATE TABLE Extra_Curricular_Activities (
     activity_id INT PRIMARY KEY AUTO_INCREMENT,
     activity_name VARCHAR(100) NOT NULL,
@@ -160,7 +176,7 @@ CREATE TABLE Extra_Curricular_Activities (
     FOREIGN KEY (advisor_id) REFERENCES Faculty(faculty_id)
 );
 
--- INSERT (Member E)
+-- INSERT (Member E: Fiinsi)
 INSERT INTO Extra_Curricular_Activities (activity_name, category, schedule_day, advisor_id, max_participants) VALUES
 ('Movie Club', 'Entertainment', 'Monday', 1, 25),
 ('Theatre Club', 'Arts', 'Tuesday', 2, 20),
@@ -169,29 +185,29 @@ INSERT INTO Extra_Curricular_Activities (activity_name, category, schedule_day, 
 ('Photography Club', 'Arts', 'Friday', 5, 15),
 ('Critics Club', 'Entertainment', 'Saturday', 1, 20);
 
--- UPDATE (Member E)
+-- UPDATE (Member E: Fiinsi)
 UPDATE Extra_Curricular_Activities
 SET max_participants = 35
 WHERE activity_name = 'Book Club';
 
--- DELETE (Member E)
+-- DELETE (Member E: Fiinsi)
 DELETE FROM Extra_Curricular_Activities
 WHERE activity_name = 'Photography Club';
 
--- SELECT (Member E)
+-- SELECT (Member E: Fiinsi)
 SELECT * FROM Extra_Curricular_Activities
 WHERE category = 'Academic Club';
 
--- SELECT with GROUP BY (Member E)
+-- SELECT with GROUP BY (Member E: Fiinsi)
 SELECT category, COUNT(*) AS total
 FROM Extra_Curricular_Activities
 GROUP BY category;
 
 -- Last reviewed by Lucky Umoka - 2026-07-17
 
--- =======================================================
+-- -------------------------------------------------------
 -- Member 5 (Lucky Umoka) - Junction Tables
--- =======================================================
+-- -------------------------------------------------------
 
 -- -------------------------------------------------------
 -- JUNCTION TABLE 1: Student_Courses
@@ -210,7 +226,7 @@ CREATE TABLE IF NOT EXISTS Student_Courses (
     FOREIGN KEY (course_id) REFERENCES Courses(course_id)
 );
 
--- INSERT (Member 5)
+-- INSERT (Member 5: Lucky Umoka)
 INSERT INTO Student_Courses (student_id, course_id, enrollment_date) VALUES
 (1, 1, '2026-01-15'),
 (1, 2, '2026-01-15'),
@@ -218,16 +234,16 @@ INSERT INTO Student_Courses (student_id, course_id, enrollment_date) VALUES
 (3, 3, '2026-01-17'),
 (4, 2, '2026-01-18');
 
--- UPDATE (Member 5)
+-- UPDATE (Member 5: Lucky Umoka)
 UPDATE Student_Courses
 SET enrollment_date = '2026-02-01'
 WHERE student_id = 1 AND course_id = 1;
 
--- DELETE (Member 5)
+-- DELETE (Member 5: Lucky Umoka)
 DELETE FROM Student_Courses
 WHERE student_id = 4 AND course_id = 2;
 
--- SELECT (Member 5)
+-- SELECT (Member 5: Lucky Umoka)
 SELECT * FROM Student_Courses
 WHERE course_id = 1;
 
@@ -246,7 +262,7 @@ CREATE TABLE IF NOT EXISTS Student_Activities (
     FOREIGN KEY (activity_id) REFERENCES Extra_Curricular_Activities(activity_id)
 );
 
--- INSERT (Member 5)
+-- INSERT (Member 5: Lucky Umoka)
 INSERT INTO Student_Activities (student_id, activity_id, join_date) VALUES
 (1, 1, '2026-02-01'),
 (2, 2, '2026-02-05'),
@@ -254,18 +270,24 @@ INSERT INTO Student_Activities (student_id, activity_id, join_date) VALUES
 (4, 3, '2026-02-12'),
 (1, 2, '2026-02-15');
 
--- UPDATE (Member 5)
+-- UPDATE (Member 5: Lucky Umoka)
 UPDATE Student_Activities
 SET join_date = '2026-03-01'
 WHERE student_id = 1 AND activity_id = 1;
 
--- DELETE (Member 5)
+-- DELETE (Member 5: Lucky Umoka)
 DELETE FROM Student_Activities
 WHERE student_id = 4 AND activity_id = 3;
 
--- SELECT (Member 5)
+-- SELECT (Member 5: Lucky Umoka)
 SELECT * FROM Student_Activities
 WHERE student_id = 1;
+
+
+-- =======================================================
+-- 3. Group tasks: JOIN queries + Aggregate query
+-- =======================================================
+
 
 -- -------------------------------------------------------
 -- JOIN QUERY 1:
@@ -322,17 +344,4 @@ FROM Courses c
 JOIN Student_Courses sc ON c.course_id = sc.course_id
 GROUP BY c.course_name;
 
-/*
-NORMALIZATION CHECK - Group 30:
-Our database is in Third Normal Form (3NF). Each table stores
-information about exactly one thing. Students stores student data,
-Faculty stores faculty data, Courses stores course data, and so on.
-We avoided many-to-many duplication by using two junction tables.
-Student_Courses connects students to courses without repeating
-student or course information in either table. Student_Activities
-connects students to activities the same way. No table contains
-data that belongs in another table, and all non-key columns depend
-only on the primary key of their own table. This design prevents
-data anomalies when inserting, updating, or deleting records.
-*/
-
+-- -------------------END---------------------------------
