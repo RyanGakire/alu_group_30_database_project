@@ -1,7 +1,7 @@
 # ALU Database Project
 A relational database for a school system with Students, Classroom, Faculty, Courses, and Extra Curricular Activities
 ## Team
-- @bouattara-cpu: Students table
+- [bouattara-cpu](https://github.com/bouattara-cpu): Students table
 - [RyanGakire](https://github.com/RyanGakire): Classroom table
 - [Virginie2026](https://github.com/Virginie2026): Faculty table
 - [akagermain](https://github.com/akagermain): Courses table
